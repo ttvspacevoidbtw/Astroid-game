@@ -14,9 +14,10 @@ color = (0, 0, 0)
 screen.fill(color)
 
 player = Ship((20, height // 2))
+asteroids = pygame.sprite.Group()
 numLevels = 4
 level = 1
-asteroidCount = 3
+asteroidCount = 8
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
 
     # game loop
     while level <= numLevels:
-        clock.tick(144)
+        clock.tick(240)
 
         # event handling
         for event in pygame.event.get():
@@ -32,14 +33,22 @@ def main():
                 sys.exit()
             if event.type == KEYDOWN:
                 if event.key == K_RIGHT:
-                    player.speed = (1, 0)
+                    player.speed[0] = 2
                 if event.key == K_LEFT:
-                    player.speed = (-1, 0)
+                    player.speed[0] = -2
                 if event.key == K_UP:
-                    player.speed =(0, -1)
+                    player.speed[1] = -2
                 if event.key == K_DOWN:
-                    player.speed = (0, 1)
-
+                    player.speed[1] = 2
+            if event.type == KEYUP:
+                if event.key == K_RIGHT:
+                    player.speed[0] = 0
+                if event.key == K_LEFT:
+                    player.speed[0] = 0
+                if event.key == K_UP:
+                    player.speed[1] = 0
+                if event.key == K_DOWN:
+                    player.speed[1] = 0
 
 
 
@@ -48,8 +57,6 @@ def main():
         screen.fill(color)
         screen.blit(player.image, player.rect)
         pygame.display.flip()
-
-
 
 
 if __name__ == "__main__":
